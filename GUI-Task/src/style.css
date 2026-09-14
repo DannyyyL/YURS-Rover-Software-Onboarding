@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    @apply h-full w-full;
+  }
+
+  #root {
+    @apply grid place-items-center;
+  }
+
+  canvas {
+    @apply block h-full w-full;
+  }
+}
