@@ -30,11 +30,18 @@ class PositionController(Node):
         if not self.e_brake:
             self.x += msg.linear.x
             self.y += msg.linear.y
+
+        if self.x >= 10: self.x = 10
+        elif self.x <= -10: self.x = -10
+
+        if self.y >= 10: self.y = 10
+        elif self.y <= -10: self.y = -10
+
         self.get_logger().info(f"x: {self.x}, y: {self.y}")
 
     def emergency_callback(self, msg):
         self.e_brake = msg.data
-        self.get_logger().info(f"Emergency brake: {self.e_brake}")
+        #self.get_logger().info(f"Emergency brake: {self.e_brake}")
     
 
 def main(args=None):
