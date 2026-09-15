@@ -1,6 +1,6 @@
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, Point
 from std_msgs.msg import Bool
 
 class PositionController(Node):
@@ -26,6 +26,15 @@ class PositionController(Node):
         )
         self.e_brake = False
 
+        #Position publisher
+        self.publisher = self.create_publisher(Point, "position", 10)
+
+    def publish_position(self):
+        position = Point()
+        position.x = self.x
+        position.y = self.y
+        self.publisher.publish(position)
+
     def movement_callback(self, msg):
         if not self.e_brake:
             self.x += msg.linear.x
@@ -36,6 +45,8 @@ class PositionController(Node):
 
         if self.y >= 10: self.y = 10
         elif self.y <= -10: self.y = -10
+
+        self.publish_position()
 
         self.get_logger().info(f"x: {self.x}, y: {self.y}")
 
